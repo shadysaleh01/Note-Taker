@@ -6,9 +6,12 @@ const app = express()
 const path = require("path")
 const PORT = process.env.PORT || 8080
 
+
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(express.static(path.join(__dirname + "/Develop/public")));
+
 
 app.get("/", (req, res) => {
    res.sendFile(path.join(__dirname + "/Develop/public/index.html"))
@@ -24,7 +27,6 @@ app.get("/notes", (req, res) => {
 //API GET Requests
 //Below case will send all saved notes form db.json to client
 app.get("/api/notes", (req, res) => {
-
    fs.readFile(path.join(__dirname + "/Develop/db/db.json"), function (err, object) {
       if (err) {
          throw err
@@ -57,7 +59,6 @@ app.post("/api/notes", (req, res) => {
 
    fs.writeFile(path.join(__dirname + "/Develop/db/db.json"), noteJSON, (err) => {
       if (err) throw err
-
       return noteJSON
    })
 
@@ -73,12 +74,8 @@ app.post("/api/notes", (req, res) => {
 
 
 
-
 app.listen(PORT, function () {
    console.log("App listening on PORT " + PORT);
 });
-
-
-
 
 
