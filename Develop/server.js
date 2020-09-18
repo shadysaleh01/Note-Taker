@@ -38,41 +38,33 @@ app.get("/api/notes", (req, res) => {
 //API POST Requests
 //Below case after the user click save button will send the saved notes to db.json then send it to the client back
 app.post("/api/notes", (req, res) => {
-   var notes
-   fs.readFile(path.join(__dirname + "/db/db.json"), function (err, object) {
-      if (err) {
-         throw err
-      }
-      notes = JSON.parse(object)
-   })
-
-   const newNote = {
-      title: req.body.title,
-      text: req.body.text,
-      id: Math.random().toString(36).substr(2, 9)
-   }
-
-   notes.push(newNote)
-
-   let noteJSON = JSON.stringify(notes)
-   console.log(noteJSON)
-
-   fs.writeFile(path.join(__dirname + "/db/db.json"), noteJSON, (err) => {
-      if (err) throw err
-      return noteJSON
-   })
 
    fs.readFile(path.join(__dirname + "/db/db.json"), function (err, object) {
       if (err) {
-         throw err
+         console.log(err)
+         return
       }
-      res.json(JSON.parse(object))
-   })
+      var notes = JSON.parse(object)
 
+      const newNote = {
+         title: req.body.title,
+         text: req.body.text,
+         id: Math.random().toString(36).substr(2, 9)
+      }
+
+      notes.push(newNote)
+
+      let noteJSON = JSON.stringify(notes)
+      console.log(noteJSON)
+
+      fs.writeFile(path.join(__dirname + "/db/db.json"), noteJSON, (err) => {
+         if (err) {
+            return console.log(err)
+         }
+         return noteJSON
+      })
+   })
 })
-
-
-
 
 app.listen(PORT, function () {
    console.log("App listening on PORT " + PORT);
