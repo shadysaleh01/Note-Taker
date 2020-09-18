@@ -77,12 +77,6 @@ app.delete('/api/notes/:id', function (req, res) {
       // json.parse
       var notes = JSON.parse(data);
 
-      // Note object 
-      const newNote = {
-         title: req.body.title,
-         text: req.body.text,
-         id: Math.random().toString(36).substr(2, 9)
-      };
       notes.splice(req.params.id, 1);
       // notes.push(newNote);
       // Will not push to newNote
