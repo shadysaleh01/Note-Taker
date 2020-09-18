@@ -10,16 +10,16 @@ const PORT = process.env.PORT || 8080
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
-app.use(express.static(path.join(__dirname + "/Develop/public")));
+app.use(express.static(path.join(__dirname + "/public")));
 
 
 app.get("/", (req, res) => {
-   res.sendFile(path.join(__dirname + "/Develop/public/index.html"))
+   res.sendFile(path.join(__dirname + "/public/index.html"))
 })
 //API GET Requests
 //Below case when a user visits '/notes' then send notes.html to the client
 app.get("/notes", (req, res) => {
-   res.sendFile(path.join(__dirname + "/Develop/public/notes.html"))
+   res.sendFile(path.join(__dirname + "/public/notes.html"))
 })
 //API GET Requests
 //Below case when a user visits '/notes' then send notes.html to the client
@@ -27,7 +27,7 @@ app.get("/notes", (req, res) => {
 //API GET Requests
 //Below case will send all saved notes form db.json to client
 app.get("/api/notes", (req, res) => {
-   fs.readFile(path.join(__dirname + "/Develop/db/db.json"), function (err, object) {
+   fs.readFile(path.join(__dirname + "/db/db.json"), function (err, object) {
       if (err) {
          throw err
       }
@@ -39,7 +39,7 @@ app.get("/api/notes", (req, res) => {
 //Below case after the user click save button will send the saved notes to db.json then send it to the client back
 app.post("/api/notes", (req, res) => {
    var notes
-   fs.readFile(path.join(__dirname + "/Develop/db/db.json"), function (err, object) {
+   fs.readFile(path.join(__dirname + "/db/db.json"), function (err, object) {
       if (err) {
          throw err
       }
@@ -57,12 +57,12 @@ app.post("/api/notes", (req, res) => {
    let noteJSON = JSON.stringify(notes)
    console.log(noteJSON)
 
-   fs.writeFile(path.join(__dirname + "/Develop/db/db.json"), noteJSON, (err) => {
+   fs.writeFile(path.join(__dirname + "/db/db.json"), noteJSON, (err) => {
       if (err) throw err
       return noteJSON
    })
 
-   fs.readFile(path.join(__dirname + "/Develop/db/db.json"), function (err, object) {
+   fs.readFile(path.join(__dirname + "/db/db.json"), function (err, object) {
       if (err) {
          throw err
       }
