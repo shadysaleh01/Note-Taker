@@ -66,6 +66,41 @@ app.post("/api/notes", (req, res) => {
    })
 })
 
+app.delete('/api/notes/:id', function (req, res) {
+
+   fs.readFile(path.join(__dirname, "db", "db.json"), 'utf8', (err, data) => {
+      if (err) {
+         console.log(err)
+         return
+      }
+      console.log('File data:', data);
+      // json.parse
+      var notes = JSON.parse(data);
+
+      // Note object 
+      const newNote = {
+         title: req.body.title,
+         text: req.body.text,
+         id: Math.random().toString(36).substr(2, 9)
+      };
+      notes.splice(req.params.id, 1);
+      // notes.push(newNote);
+      // Will not push to newNote
+      let notesJSON = JSON.stringify(notes);
+      // push to array 
+      // then stringify 
+      fs.writeFile(path.join(__dirname, "db", "db.json"), notesJSON, (err) => {
+         if (err) {
+            return console.log(err);
+         }
+         // this is console logging
+         console.log("Success!", notesJSON);
+         return notesJSON;
+      });
+   })
+});
+
+
 app.listen(PORT, function () {
    console.log("App listening on PORT " + PORT);
 });
