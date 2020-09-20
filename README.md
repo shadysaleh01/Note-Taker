@@ -1,6 +1,6 @@
 
 # **Note-Taker**
-
+[Full Demo Video](https://drive.google.com/file/d/1qzlOV3S3INMgmkHaa5mWZLMLl-r07esW/preview)
 ## Table of Contents
 - [Description](#description)
 - [Installation](#installation)
